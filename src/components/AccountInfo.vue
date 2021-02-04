@@ -64,7 +64,7 @@ export default {
   flex: 0 0 auto !important;
 }
 
-.card {
+/* .card {
   box-shadow: none !important;
-}
+} */
 </style>

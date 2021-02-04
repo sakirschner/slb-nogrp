@@ -13,7 +13,7 @@
     </v-card-title>
     <v-card-text>
       <v-data-table
-        :items="stats"
+        :items="achievements"
         :headers="headers"
         sort-by="created_at"
         :sort-desc="true"
@@ -55,15 +55,15 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   props: {
-    groups: Array,
+    achievements: Array,
   },
-  mounted() {
-    this.getAllAchievements();
-  },
+  // mounted() {
+  //   this.getAllAchievements();
+  // },
   data: () => ({
     stats: [],
     loading: false,
@@ -72,54 +72,52 @@ export default {
     singleExpand: false,
     headers: [
       { text: "", value: "student.image", sortable: false },
-      { text: "Student", value: "student.user_name" },
-      { text: "Group", value: "groupName" },
       { text: "Achievement", value: "achievement.achievement" },
       { text: "Points", value: "achievement.points" },
       { text: "Time", value: "created_at" },
       { text: "", value: "data-table-expand" },
     ],
   }),
-  watch: {
-    options: {
-      handler() {
-        this.getAllAchievements();
-      },
-      deep: true,
-    },
-  },
-  methods: {
-    async getAllAchievements() {
-      this.loading = true;
-      let token = this.$store.state.auth.token;
-      if (token) {
-        axios
-          .get("http://127.0.0.1:8000/api/achievement/studentachievements/", {
-            headers: {
-              Authorization: token,
-            },
-          })
-          .then((response) => {
-            this.stats = response.data;
-            this.stats.forEach((stat, index) => {
-              this.stats[index].created_at =
-                new Date(stat.created_at).toLocaleDateString() +
-                " " +
-                new Date(stat.created_at).toLocaleTimeString();
-              this.$props.groups.groups.forEach((group) => {
-                group.students.forEach((student) => {
-                  if (student.id === stat.student.id) {
-                    this.stats[index].groupName = group.name;
-                    this.stats[index].groupId = group.id;
-                  }
-                });
-              });
-            });
-            this.loading = false;
-          });
-      }
-    },
-  },
+  // watch: {
+  //   options: {
+  //     handler() {
+  //       this.getAllAchievements();
+  //     },
+  //     deep: true,
+  //   },
+  // },
+  // methods: {
+  //   async getAllAchievements() {
+  //     this.loading = true;
+  //     let token = this.$store.state.auth.token;
+  //     if (token) {
+  //       axios
+  //         .get("http://127.0.0.1:8000/api/achievement/studentachievements/", {
+  //           headers: {
+  //             Authorization: token,
+  //           },
+  //         })
+  //         .then((response) => {
+  //           this.stats = response.data;
+  //           this.stats.forEach((stat, index) => {
+  //             this.stats[index].created_at =
+  //               new Date(stat.created_at).toLocaleDateString() +
+  //               " " +
+  //               new Date(stat.created_at).toLocaleTimeString();
+  //             this.$props.groups.groups.forEach((group) => {
+  //               group.students.forEach((student) => {
+  //                 if (student.id === stat.student.id) {
+  //                   this.stats[index].groupName = group.name;
+  //                   this.stats[index].groupId = group.id;
+  //                 }
+  //               });
+  //             });
+  //           });
+  //           this.loading = false;
+  //         });
+  //     }
+  //   },
+  // },
 };
 </script>
 
