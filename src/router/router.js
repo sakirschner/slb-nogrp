@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Profile from '../views/Profile'
+import Profile from '../views/NoGroups/Profile'
 import Home from '../views/NoGroups/Home'
 import GroupInfo from '../views/GroupInfo'
 import Stats from '../views/Stats'

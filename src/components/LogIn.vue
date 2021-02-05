@@ -363,7 +363,7 @@ export default {
         };
       }
       await axios
-        .post("http://127.0.0.1:8000/api/user/create/", payload)
+        .post(`${this.$store.state.url.url}/api/user/create/`, payload)
         .then(() => {
           if (GoogleUser) {
             payload = {

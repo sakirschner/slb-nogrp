@@ -43,7 +43,7 @@ const actions = {
    async getAllGroups({commit, rootState}) {
        let token = rootState.auth.token
        if (token) {
-           await axios.get('http://127.0.0.1:8000/api/group/groups/', {
+           await axios.get(`${this.$store.state.url.url}/api/group/groups/`, {
                headers: {
                    'Authorization': token
                }
@@ -56,7 +56,7 @@ const actions = {
     async getAllAchievements({commit, rootState}) {
         let token = rootState.auth.token
         if (token) {
-            await axios.get('http://127.0.0.1:8000/api/achievement/studentachievements/', {
+            await axios.get(`${this.$store.state.url.url}/api/achievement/studentachievements/`, {
                 headers: {
                     'Authorization': token
                 }

@@ -149,7 +149,7 @@ export default {
     async getAccount() {
       if (this.token) {
         await axios
-          .get("http://127.0.0.1:8000/api/user/me/", {
+          .get(`${this.$store.state.url.url}/api/user/me/`, {
             headers: {
               Authorization: this.token,
             },

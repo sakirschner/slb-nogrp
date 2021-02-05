@@ -70,7 +70,7 @@ export default {
       let token = this.$store.state.auth.token;
       if (token) {
         await axios
-          .get("http://127.0.0.1:8000/api/group/groups/", {
+          .get(`${this.$store.state.url.url}/api/group/groups/`, {
             headers: {
               Authorization: token,
             },
@@ -100,7 +100,7 @@ export default {
         if (token) {
           axios
             .get(
-              `http://127.0.0.1:8000/api/achievement/studentachievements/?student_in=${studentIds}`,
+              `${this.$store.state.url.url}/api/achievement/studentachievements/?student_in=${studentIds}`,
               {
                 headers: {
                   Authorization: token,
@@ -157,7 +157,7 @@ export default {
       if (token) {
         axios
           .patch(
-            `http://127.0.0.1:8000/api/group/groups/${groupId}/`,
+            `${this.$store.state.url.url}/api/group/groups/${groupId}/`,
             payload,
             {
               headers: {

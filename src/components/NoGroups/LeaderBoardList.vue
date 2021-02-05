@@ -1,185 +1,185 @@
 <template>
   <div>
     <v-row class="leader-row">
-      <v-card class="leader-card" style="text-align:center">
-          <h3>Class Leaders</h3>
+      <v-card class="leader-card mb-2" style="text-align:center">
+        <h3>Class Leaders</h3>
         <v-card-text style="display:flex; justify-content:space-evenly">
-        <div class="leader-col">
-          <p style="color:#B4B4B4">2</p>
-          <v-avatar v-if="organizedStudents[1].image" size="75" class="ml-1">
-            <v-img :src="organizedStudents[1].image" />
-          </v-avatar>
-          <v-avatar color="rgb(0, 174, 255)" v-else size="75" class="ml-1">
-            <v-icon dark size="50">mdi-account-circle</v-icon>
-          </v-avatar>
-          <v-chip class="ma-1 mt-2" color="#B4B4B4" text-color="white">
-            <v-icon small>mdi-medal-outline</v-icon>
-            <span class="pl-1">{{ organizedStudents[1].points }} pts</span>
-          </v-chip>
-        </div>
-        <div class="leader-col">
-          <v-icon x-large class="mb-2" color="#D4AF37">mdi-crown</v-icon>
-          <v-avatar v-if="organizedStudents[0].image" size="128">
-            <v-img :src="organizedStudents[0].image" />
-          </v-avatar>
-          <v-avatar color="rgb(0, 174, 255)" v-else size="128">
-            <v-icon dark size="1000">mdi-account-circle</v-icon>
-          </v-avatar>
-          <v-chip
-            class="ma-1 mt-2 pa-2"
-            color="#D4AF37"
-            text-color="white"
-            style="justify-content:center"
-          >
-            <v-icon md>mdi-trophy-outline</v-icon>
-            <span class="pl-2" style="font-size: 18px"
-              >{{ organizedStudents[0].points }} pts</span
+          <div class="leader-col">
+            <p style="color:#B4B4B4">2</p>
+            <v-avatar v-if="organizedStudents[1].image" size="75" class="ml-1">
+              <v-img :src="organizedStudents[1].image" />
+            </v-avatar>
+            <v-avatar color="rgb(0, 174, 255)" v-else size="75" class="ml-1">
+              <v-icon dark size="50">mdi-account-circle</v-icon>
+            </v-avatar>
+            <v-chip class="ma-1 mt-2" color="#B4B4B4" text-color="white">
+              <v-icon small>mdi-medal-outline</v-icon>
+              <span class="pl-1">{{ organizedStudents[1].points }} pts</span>
+            </v-chip>
+          </div>
+          <div class="leader-col">
+            <v-icon x-large class="mb-2" color="#D4AF37">mdi-crown</v-icon>
+            <v-avatar v-if="organizedStudents[0].image" size="128">
+              <v-img :src="organizedStudents[0].image" />
+            </v-avatar>
+            <v-avatar color="rgb(0, 174, 255)" v-else size="128">
+              <v-icon dark size="100">mdi-account-circle</v-icon>
+            </v-avatar>
+            <v-chip
+              class="ma-1 mt-2 pa-2"
+              color="#D4AF37"
+              text-color="white"
+              style="justify-content:center"
             >
-          </v-chip>
-        </div>
-        <div class="leader-col">
-          <p style="color:#AD8A56">3</p>
-          <v-avatar v-if="organizedStudents[2].image" size="75" class="ml-1">
-            <v-img :src="organizedStudents[2].image" />
-          </v-avatar>
-          <v-avatar color="rgb(0, 174, 255)" v-else size="75" class="ml-1">
-            <v-icon dark size="50">mdi-account-circle</v-icon>
-          </v-avatar>
-          <v-chip class="ma-1 mt-2" color="#AD8A56" text-color="white">
-            <v-icon small>mdi-medal-outline</v-icon>
-            <span class="pl-1">{{ organizedStudents[2].points }} pts</span>
-          </v-chip>
-        </div>
+              <v-icon md>mdi-trophy-outline</v-icon>
+              <span class="pl-2" style="font-size: 18px"
+                >{{ organizedStudents[0].points }} pts</span
+              >
+            </v-chip>
+          </div>
+          <div class="leader-col">
+            <p style="color:#AD8A56">3</p>
+            <v-avatar v-if="organizedStudents[2].image" size="75" class="ml-1">
+              <v-img :src="organizedStudents[2].image" />
+            </v-avatar>
+            <v-avatar color="rgb(0, 174, 255)" v-else size="75" class="ml-1">
+              <v-icon dark size="50">mdi-account-circle</v-icon>
+            </v-avatar>
+            <v-chip class="ma-1 mt-2" color="#AD8A56" text-color="white">
+              <v-icon small>mdi-medal-outline</v-icon>
+              <span class="pl-1">{{ organizedStudents[2].points }} pts</span>
+            </v-chip>
+          </div>
         </v-card-text>
       </v-card>
     </v-row>
+
     <v-row>
-      <v-col class="lb-col">
-        <div v-for="(item, index) in filteredStudents(1, 6)" :key="item.id">
-          <v-card class="mb-4 pr-2">
-            <v-card-text class="pr-2">
-              <span class="mr-2">
-                {{ index + Math.ceil(organizedStudents.length / 6) - 2 }}
-              </span>
-              <v-avatar v-if="item.image">
-                <v-img :src="item.image" class="avatar" />
-              </v-avatar>
-              <v-avatar color="rgb(0, 174, 255)" v-else>
-                <v-icon dark size="30">mdi-account-circle</v-icon>
-              </v-avatar>
-              <div
-                style="display: inline-block; color:#00aeff"
-                class="pl-6 pts"
+      <v-col v-for="index in columns" :key="index" class="lb-col">
+        <div
+          v-for="(item, index1) in filteredStudents(index, columns)"
+          :key="item.id"
+        >
+          <v-card class="mb-4 pr-2" style="padding:0 !important">
+            <v-card-text class="pr-2" style="padding:10px !important">
+              <span class="mr-2" v-if="index === 1">{{ index1 + 4 }}</span>
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns === 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length < 4
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) *
+                      index +
+                    1
+                }}</span
               >
-                <b>{{ item.points }} pts</b>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
-      </v-col>
-      <v-col class="lb-col">
-        <div v-for="(item, index) in filteredStudents(2, 6)" :key="item.id">
-          <v-card class="mb-4 pr-2">
-            <v-card-text>
-              <span class="mr-2">
-                {{ index + Math.ceil(organizedStudents.length / 6) * 2 - 3 }}
-              </span>
-              <v-avatar v-if="item.image">
-                <v-img :src="item.image" class="avatar" />
-              </v-avatar>
-              <v-avatar color="rgb(0, 174, 255)" v-else>
-                <v-icon dark size="30">mdi-account-circle</v-icon>
-              </v-avatar>
-              <div
-                style="display: inline-block; color:#00aeff"
-                class="pl-6 pts"
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns === 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length === 4
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) * index
+                }}</span
               >
-                <b>{{ item.points }} pts</b>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
-      </v-col>
-      <v-col class="lb-col">
-        <div v-for="(item, index) in filteredStudents(3, 6)" :key="item.id">
-          <v-card class="mb-4 pr-2">
-            <v-card-text>
-              <span class="mr-2">
-                {{ index + Math.ceil(organizedStudents.length / 6) * 3 - 4 }}
-              </span>
-              <v-avatar v-if="item.image">
-                <v-img :src="item.image" class="avatar" />
-              </v-avatar>
-              <v-avatar color="rgb(0, 174, 255)" v-else>
-                <v-icon dark size="30">mdi-account-circle</v-icon>
-              </v-avatar>
-              <div
-                style="display: inline-block; color:#00aeff"
-                class="pl-6 pts"
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns === 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length > 4
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) *
+                      index -
+                    1
+                }}</span
               >
-                <b>{{ item.points }} pts</b>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
-      </v-col>
-      <v-col class="lb-col">
-        <div v-for="(item, index) in filteredStudents(4, 6)" :key="item.id">
-          <v-card class="mb-4 pr-2">
-            <v-card-text>
-              <span class="mr-2">
-                {{ index + Math.ceil(organizedStudents.length / 6) * 4 - 5 }}
-              </span>
-              <v-avatar v-if="item.image">
-                <v-img :src="item.image" class="avatar" />
-              </v-avatar>
-              <v-avatar color="rgb(0, 174, 255)" v-else>
-                <v-icon dark size="30">mdi-account-circle</v-icon>
-              </v-avatar>
-              <div
-                style="display: inline-block; color:#00aeff"
-                class="pl-6 pts"
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns !== 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length !== 4 &&
+                    colums === 3
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) * index
+                }}</span
               >
-                <b>{{ item.points }} pts</b>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
-      </v-col>
-      <v-col class="lb-col">
-        <div v-for="(item, index) in filteredStudents(5, 6)" :key="item.id">
-          <v-card class="mb-4 pr-2">
-            <v-card-text>
-              <span class="mr-2">
-                {{ index + Math.ceil(organizedStudents.length / 6) * 5 - 6 }}
-              </span>
-              <v-avatar v-if="item.image">
-                <v-img :src="item.image" class="avatar" />
-              </v-avatar>
-              <v-avatar color="rgb(0, 174, 255)" v-else>
-                <v-icon dark size="30">mdi-account-circle</v-icon>
-              </v-avatar>
-              <div
-                style="display: inline-block; color:#00aeff"
-                class="pl-6 pts"
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns !== 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length === 4 &&
+                    colums > 3
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) *
+                      index -
+                    1
+                }}</span
               >
-                <b>{{ item.points }} pts</b>
-              </div>
-            </v-card-text>
-          </v-card>
-        </div>
-      </v-col>
-      <v-col class="lb-col">
-        <div v-for="(item, index) in filteredStudents(6, 6)" :key="item.id">
-          <v-card class="mb-4 pr-2">
-            <v-card-text>
-              <span class="mr-2">
-                {{ index + Math.ceil(organizedStudents.length / 6) * 6 - 7 }}
-              </span>
-              <v-avatar v-if="item.image">
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns !== 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length === 4 &&
+                    columns >= 3
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) *
+                      index -
+                    1
+                }}</span
+              >
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns !== 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length < 4 &&
+                    columns >= 3
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) *
+                      index -
+                    1
+                }}</span
+              >
+              <span
+                class="mr-2"
+                v-else-if="
+                  (organizedStudents.length - 3) % columns !== 0 &&
+                    index > 1 &&
+                    filteredStudents(index, columns).length > 4 &&
+                    columns >= 3
+                "
+                >{{
+                  index1 +
+                    Math.ceil((organizedStudents.length - 3) / columns) *
+                      index -
+                    1
+                }}</span
+              >
+              <v-avatar class="ml-1" v-if="item.image">
                 <v-img :src="item.image" class="avatar" />
               </v-avatar>
-              <v-avatar color="rgb(0, 174, 255)" v-else>
+              <v-avatar class="ml-1" color="rgb(0, 174, 255)" v-else>
                 <v-icon dark size="30">mdi-account-circle</v-icon>
               </v-avatar>
               <div
@@ -203,11 +203,36 @@ export default {
   },
   data: () => ({
     organizedStudents: [],
+    columns: 0,
   }),
   created() {
+    this.determineColumns();
     this.organizeStudents();
   },
   methods: {
+    determineColumns() {
+      const length = this.$props.students.length - 3;
+      switch (true) {
+        case length <= 5:
+          this.columns = 1;
+          break;
+        case length > 5 && length <= 10:
+          this.columns = 2;
+          break;
+        case length > 10 && length <= 15:
+          this.columns = 3;
+          break;
+        case length > 15 && length <= 20:
+          this.columns = 4;
+          break;
+        case length > 20 && length <= 25:
+          this.columns = 5;
+          break;
+        case length > 25 && length <= 30:
+          this.columns = 6;
+          break;
+      }
+    },
     organizeStudents() {
       this.organizedStudents = this.$props.students.sort((a, b) => {
         if (a.points < b.points) {
@@ -228,7 +253,6 @@ export default {
       return color;
     },
     filteredStudents(column, columns) {
-      console.log(columns)
       const self = this;
       const total = this.organizedStudents.length - 3;
       const gap = Math.ceil(total / columns);
@@ -272,7 +296,8 @@ th {
 .leader-card {
   /* display: flex;
   justify-content: space-evenly; */
-  padding: 15px;
+  padding: 0px;
+  padding-top: 10px;
   width: 500px;
 }
 
@@ -283,6 +308,11 @@ th {
   text-align: center;
   justify-content: flex-end;
 }
+  .pts {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+  }
 
 @media only screen and (max-width: 750px) {
   .lb-col {
@@ -290,12 +320,6 @@ th {
     padding: 0 !important;
     padding-right: 12px !important;
     padding-left: 12px !important;
-  }
-
-  .pts {
-    float: right;
-    margin-right: 20px;
-    margin-top: 10px;
   }
 }
 </style>

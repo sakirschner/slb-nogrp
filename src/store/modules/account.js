@@ -8,7 +8,7 @@ const state = () => ({
 
 const actions = {
     registerAccount({commit}, payload) {
-        axios.post('http://127.0.0.1:8000/api/user/create/', payload)
+        axios.post(`${this.$store.state.url.url}/api/user/create/`, payload)
             .then((response) => {
                 commit('setAccount', response)
                 commit('auth/setAuthentication', null, {root: true})
@@ -23,7 +23,7 @@ const actions = {
         console.log("getting account")
         let token = rootState.auth.token
         if (token) {
-            axios.get('http://127.0.0.1:8000/api/user/me/', {
+            axios.get(`${this.$store.state.url.url}/api/user/me/`, {
                 headers: {
                     'Authorization': token
                 }
@@ -39,7 +39,7 @@ const actions = {
     getClass({commit, rootState}) {
         let token = rootState.auth.token
         if (token) {
-            axios.get('http://127.0.0.1:8000/api/user/', {
+            axios.get(`${this.$store.state.url.url}/api/user/`, {
                 headers: {
                     'Authorization': token
                 }

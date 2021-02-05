@@ -1,5 +1,4 @@
 <template>
-  <v-container>
     <v-card>
       <v-card-title>Trophy Case</v-card-title>
       <v-card-text v-if="loading">
@@ -15,10 +14,10 @@
       </v-card-text>
       <v-card-text v-else-if="!loading && !stats.length">
         <v-row v-if="!stats.length">
-          No achievements yet
+          <span class="ml-4">No achievements yet</span>
         </v-row>
-        <v-row v-if="foundGroup.group">
-          <v-col cols="12" md="3">
+        <!-- <v-row v-if="foundGroup.group"> -->
+          <!-- <v-col cols="12" md="3">
             <v-card color="#EA6400" dark elevation="0">
               <v-card-title>
                 Place
@@ -29,8 +28,8 @@
                 >
               </v-card-text>
             </v-card>
-          </v-col>
-          <v-col cols="12" md="3">
+          </v-col> -->
+          <!-- <v-col cols="12" md="3">
             <v-card color="#00aeff" dark elevation="0">
               <v-card-title>
                 Total Points
@@ -40,7 +39,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-card-text>
       <v-card-text v-else>
         <v-row>
@@ -51,7 +50,7 @@
               </v-card-title>
               <v-card-text>
                 <span class="headline"
-                  >{{ foundGroup.index + 1 }}{{ foundGroup.group.suffix }}</span
+                  >{{ index + 1 }}{{ foundStudent.suffix }}</span
                 >
               </v-card-text>
             </v-card>
@@ -66,7 +65,7 @@
               </v-card-text>
             </v-card>
           </v-col>
-          <v-col cols="12" md="6" class="trophies-column" v-if="stats.length">
+          <!-- <v-col cols="12" md="6" class="trophies-column" v-if="stats.length">
             <div
               v-for="reward in group.rewards"
               :key="reward.id"
@@ -75,7 +74,7 @@
               <v-icon size="90px" color="#FFD700">mdi-trophy</v-icon>
               <span>{{ reward.reward }}</span>
             </div>
-          </v-col>
+          </v-col> -->
         </v-row>
         <v-card-title>
           Group Stats
@@ -118,7 +117,6 @@
         </v-data-table>
       </v-card-text>
     </v-card>
-  </v-container>
 </template>
 
 <script>
@@ -126,21 +124,22 @@ import axios from "axios";
 
 export default {
   props: {
-    group: Object,
+    student: Object,
     stats: Array,
     totalPoints: Number,
   },
   data: () => ({
+    students: [],
+    index: 0,
+    foundStudent: {},
+    organizedStudents: [],
     search: "",
     groups: [],
-    organizedGroups: [],
-    foundGroup: {},
     expanded: [],
     singleExpand: false,
     loading: true,
     headers: [
       { text: "", value: "student.image", sortable: false },
-      { text: "Student", value: "student.user_name" },
       { text: "Achievement", value: "achievement.achievement" },
       { text: "Points", value: "achievement.points" },
       { text: "Time", value: "created_at" },
@@ -148,53 +147,47 @@ export default {
     ],
   }),
   async created() {
-    if (this.$props.group !== undefined) {
-      await this.getGroups();
-    } else {
-      this.loading = false;
-    }
+    await this.getStudents();
   },
   methods: {
-    async getGroups() {
+    async getStudents() {
       let token = this.$store.state.auth.token;
       if (token) {
         await axios
-          .get(`${this.$store.state.url.url}/api/group/groups/`, {
+          .get(`${this.$store.state.url.url}/api/user/user/`, {
             headers: {
               Authorization: token,
             },
           })
           .then((response) => {
-            this.groups = response.data;
-            this.organizeGroups();
+            this.students = response.data.filter((student) => {
+                return student.display
+            });
+            this.organizeStudents();
           });
       }
     },
-    async organizeGroups() {
-      this.organizedGroups = this.groups.sort((a, b) => {
+    organizeStudents() {
+      this.organizedStudents = this.students.sort((a, b) => {
         if (a.points < b.points) {
           return 1;
         } else {
           return -1;
         }
       });
-      await this.organizedGroups.forEach((group, i) => {
-        this.organizedGroups[i].suffix = this.nth(i);
+      this.organizedStudents.forEach((student, i) => {
+        this.organizedStudents[i].suffix = this.nth(i + 1);
       });
-      await this.setPlace();
+      this.setPlace();
     },
     nth(n) {
-      return ["st", "nd", "rd"][(n / 10) % 10 ^ 1 && n % 10] || "th";
+      return ["st", "nd", "rd"][((((n + 90) % 100) - 10) % 10) - 1] || "th";
     },
-    async setPlace() {
-      this.foundGroup = {
-        index: 0,
-        group: {},
-      };
-      await this.organizedGroups.forEach((group, index) => {
-        if (group.id === this.$props.group.id) {
-          this.foundGroup.group = group;
-          this.foundGroup.index = index;
+    setPlace() {
+      this.organizedStudents.forEach((student, index) => {
+        if (student.id === this.$props.student.id) {
+          this.index = index;
+          this.foundStudent = student;
         }
       });
       this.loading = false;

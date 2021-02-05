@@ -55,7 +55,7 @@ export default {
       if (token) {
         await axios
           .get(
-            `http://127.0.0.1:8000/api/group/groups/${this.$route.params.id}/`,
+            `${this.$store.state.url.url}/api/group/groups/${this.$route.params.id}/`,
             {
               headers: {
                 Authorization: token,
@@ -77,7 +77,7 @@ export default {
       if (token) {
         await axios
           .get(
-            `http://127.0.0.1:8000/api/achievement/studentachievements/?student_in=${studentIds}`,
+            `${this.$store.state.url.url}/api/achievement/studentachievements/?student_in=${studentIds}`,
             {
               headers: {
                 Authorization: token,

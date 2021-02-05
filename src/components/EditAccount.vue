@@ -143,7 +143,7 @@ export default {
       if (token) {
         await axios
           .patch(
-            `http://127.0.0.1:8000/api/user/${this.$props.account.id}/`,
+            `${this.$store.state.url.url}/api/user/${this.$props.account.id}/`,
             payload,
             {
               headers: {
@@ -155,7 +155,7 @@ export default {
             if (this.avatar) {
               this.uploadImage();
             } else {
-              this.$emit("submitted");
+              this.$router.go();
             }
           });
       }
@@ -168,7 +168,7 @@ export default {
       if (token) {
         await axios
           .post(
-            `http://127.0.0.1:8000/api/user/user/${this.$props.account.id}/upload-image/`,
+            `${this.$store.state.url.url}/api/user/user/${this.$props.account.id}/upload-image/`,
             data,
             {
               headers: {
@@ -180,7 +180,7 @@ export default {
             }
           )
           .then(() => {
-            this.$emit("submitted");
+            this.router.go();
           });
       }
     },

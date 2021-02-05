@@ -13,7 +13,7 @@ const actions = {
             await commit('setTokenFromSession', sessionToken);
             await commit('setAuthentication')
         } else {
-            await axios.post('http://127.0.0.1:8000/api/user/token/', payload)
+            await axios.post(`${this.$store.state.url.url}/api/user/token/`, payload)
                 .then((response) => {
                     commit('setToken', response);
                     commit('setAuthentication');

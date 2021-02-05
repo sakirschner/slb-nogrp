@@ -92,7 +92,7 @@ export default {
   //     let token = this.$store.state.auth.token;
   //     if (token) {
   //       axios
-  //         .get("http://127.0.0.1:8000/api/achievement/studentachievements/", {
+  //         .get(`${this.$store.state.url.url}/api/achievement/studentachievements/", {
   //           headers: {
   //             Authorization: token,
   //           },

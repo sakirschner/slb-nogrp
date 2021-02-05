@@ -1,4 +1,4 @@
-<template>
+kz<template>
   <div>
     <v-container v-if="loading">
       <v-layout row justify-center class="pt-10 pb-10">
@@ -88,18 +88,20 @@ export default {
             }
           )
           .then((response) => {
+            console.log("in then");
             this.achievements = response.data;
             this.achievements.forEach((stat, index) => {
               this.achievements[index].created_at =
-                new Date(stat.created_at).toLocaleDateString() +
+                new Date(stat.created_at).toLocaleDateString('en-US') +
                 " " +
-                new Date(stat.created_at).toLocaleTimeString();
-              this.compareStudentPoints();
+                new Date(stat.created_at).toLocaleTimeString('en-US');
             });
+            this.compareStudentPoints();
           });
       }
     },
     async compareStudentPoints() {
+      console.log("comparing");
       this.students.students.forEach((student) => {
         let points = 0;
         let studentAchievements = this.achievements.filter((achievement) => {
@@ -112,6 +114,7 @@ export default {
           this.updateStudent(student.id, points);
         }
       });
+      console.log("done comparing");
       this.loading = false;
     },
     async updateStudent(id, points) {
