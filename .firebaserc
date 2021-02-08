@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "student-leader-board-client"
+  },
+  "hosting": {
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

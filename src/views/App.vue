@@ -38,11 +38,12 @@
               :to="{ name: 'profile' }"
               style="text-decoration: none"
             >
-              <v-list-item-title style="color: rgba(0, 0, 0, 0.87) !important"
+              <v-list-item-title v-if="account.first_name" style="color: rgba(0, 0, 0, 0.87) !important"
                 >{{ account.first_name }}
                 {{ account.last_name }}</v-list-item-title
               >
-              <v-list-item-subtitle>{{
+              <v-list-item-title v-else style="color: rgba(0, 0, 0, 0.87) !important">{{account.email}}</v-list-item-title>
+              <v-list-item-subtitle v-if="account.first_name">{{
                 account.user_name
               }}</v-list-item-subtitle>
             </router-link>

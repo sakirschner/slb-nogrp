@@ -7,13 +7,13 @@ const state = () => ({
 })
 
 const actions = {
-    async getToken({ commit }, payload) {
+    async getToken({ commit, rootState }, payload) {
         const sessionToken = sessionStorage.getItem('token');
         if (sessionToken) {
             await commit('setTokenFromSession', sessionToken);
             await commit('setAuthentication')
         } else {
-            await axios.post(`${this.$store.state.url.url}/api/user/token/`, payload)
+            await axios.post(`${rootState.url.url}/api/user/token/`, payload)
                 .then((response) => {
                     commit('setToken', response);
                     commit('setAuthentication');

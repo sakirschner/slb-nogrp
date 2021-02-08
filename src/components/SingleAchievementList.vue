@@ -60,7 +60,7 @@
 export default {
   props: {
     achievements: Array,
-    groups: Array
+    // groups: Array
   },
   mounted() {
     this.organizeAchievements();
@@ -73,8 +73,7 @@ export default {
     singleExpand: false,
     headers: [
       { text: "", value: "student.image", sortable: false },
-      { text: "Student", value: "student.user_name" },
-      { text: "Group", value: "groupName" },
+      { text: "Student", value: "student.email" },
       { text: "Achievement", value: "achievement.achievement" },
       { text: "Points", value: "achievement.points" },
       { text: "Time", value: "created_at" },
@@ -94,17 +93,16 @@ export default {
     this.stats = this.$props.achievements
       this.stats.forEach((stat, index) => {
         this.stats[index].created_at =
-          new Date(stat.created_at).toLocaleDateString() +
+          new Date(stat.created_at).toLocaleDateString('en-US') +
           " " +
-          new Date(stat.created_at).toLocaleTimeString();
-        this.$props.groups.groups.forEach((group) => {
-          group.students.forEach((student) => {
-            if (student.id === stat.student.id) {
-              this.stats[index].groupName = group.name;
-              this.stats[index].groupId = group.id;
-            }
-          });
-        });
+          new Date(stat.created_at).toLocaleTimeString('en-US');
+      
+      //   this.$props.groups.groups.forEach((group) => {
+      //     group.students.forEach((student) => {
+      //       if (student.id === stat.student.id) {
+      //         this.stats[index].groupName = group.name;
+      //         this.stats[index].groupId = group.id;
+      //       }
       });
       this.loading = false;
     },

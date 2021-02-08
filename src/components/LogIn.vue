@@ -17,8 +17,8 @@
               <div class="caption" style="color: #00aeff">{{ i.name }}</div>
             </v-tab>
             <v-tab-item>
-              <v-card v-if="loading">
-                <v-layout row justify-center class="pt-10 mb-10">
+              <v-card v-if="loading" style="box-shadow:none !important">
+                <v-layout row justify-center class="pt-10 mb-10" >
                   <v-progress-circular
                     :size="70"
                     :width="7"
@@ -294,12 +294,11 @@ export default {
       this.$emit("submitted", fromRegister);
     },
     async gLogIn(GoogleUser) {
-      console.log("here")
       this.logInError = false;
       this.registerError = false;
       this.$store.commit("auth/setError", null);
       const payload = {
-        email: GoogleUser.Mt.tu,
+        email: GoogleUser.Es.kt,
         password: "Dummy!1951",
       };
       const fromRegister = false;
@@ -341,13 +340,13 @@ export default {
     async registerAccount(GoogleUser) {
       this.loading = true;
       let payload = {};
-      if (GoogleUser && GoogleUser.Mt) {
+      if (GoogleUser && GoogleUser.Es) {
         payload = {
           email: GoogleUser.Mt.tu,
           password: "Dummy!1951",
-          first_name: GoogleUser.Mt.qW,
-          last_name: GoogleUser.Mt.vU,
-          user_name: GoogleUser.Mt.tu.split("@")[0],
+          first_name: GoogleUser.Es.bT,
+          last_name: GoogleUser.Es.dR,
+          user_name: GoogleUser.Mt.kt.split("@")[0],
         };
       } else {
         payload = {
@@ -367,7 +366,7 @@ export default {
         .then(() => {
           if (GoogleUser) {
             payload = {
-              email: GoogleUser.Mt.tu,
+              email: GoogleUser.Es.kt,
               password: "Dummy!1951",
             };
           } else {

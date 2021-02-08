@@ -1,17 +1,15 @@
 <template>
   <v-container class="pa-8">
-    <v-dialog v-model="dialog" max-width="290">
-      <v-card>
-        <v-conatiner>
-          <v-layout row justify-center class="pt-10 pb-10">
-            <v-progress-circular
-              :size="70"
-              :width="7"
-              color="rgb(0, 174, 255)"
-              indeterminate
-            ></v-progress-circular>
-          </v-layout>
-        </v-conatiner>
+    <v-dialog v-model="dialog" width="325">
+      <v-card width="300" style="margin: auto">
+        <v-layout row justify-center class="pt-10 pb-10">
+          <v-progress-circular
+            :size="70"
+            :width="6"
+            color="rgb(0, 174, 255)"
+            indeterminate
+          ></v-progress-circular>
+        </v-layout>
       </v-card>
     </v-dialog>
     <v-card class="mt-16 mx-auto pt-10">
@@ -38,7 +36,7 @@
               :items="students"
               v-model="selectedStudent"
               name="student"
-              item-text="user_name"
+              item-text="email"
               return-object
               label="Select a student"
               v-if="!loadingStudents"
@@ -55,7 +53,6 @@
     <v-card class="mt-8">
       <SingleAchievementList
         :achievements="achievements"
-        :groups="groups"
         :key="datacollection"
       />
     </v-card>
@@ -74,11 +71,12 @@ export default {
     SingleAchievementList,
   },
   data: () => ({
+    account: {},
     students: [],
     noStudents: ["Loading Data"],
     achievements: [],
     points: [],
-    groups: [],
+    // groups: [],
     selectedStudent: {},
     datacollection: null,
     dialog: false,
@@ -90,28 +88,50 @@ export default {
     },
   },
   async created() {
-    await this.getStudents();
-    await this.getAllGroups();
+    await this.getUser();
+    // await this.getAllGroups();
   },
   methods: {
-    async getStudents() {
+    async getUser() {
       let token = this.$store.state.auth.token;
       if (token) {
-        await axios
-          .get(`${this.$store.state.url.url}/api/group/groups/`, {
+        axios
+          .get(`${this.$store.state.url.url}/api/user/me/`, {
             headers: {
               Authorization: token,
             },
           })
           .then((response) => {
-            if (response.data.length) {
-              response.data.forEach((group) => {
-                group.students.forEach((student) => {
-                  this.students.push(student);
-                });
-                this.loadingStudents = false;
-              });
+            console.log(response.data);
+            this.account = response.data;
+            this.getStudents();
+          });
+      }
+    },
+    async getStudents() {
+      let token = this.$store.state.auth.token;
+      if (token) {
+        await axios
+          .get(`${this.$store.state.url.url}/api/user/`, {
+            headers: {
+              Authorization: token,
+            },
+          })
+          .then((response) => {
+            if (
+              this.account.email === "jeremy.hein@uprepschools.com" ||
+              this.account.email === "scottakirschner@gmail.com"
+            ) {
+              this.students = response.data;
+              this.loadingStudents = false;
             } else {
+              response.data.forEach((student) => {
+                if ((student.email = this.account.email)) {
+                  console.log("student");
+                  console.log(student);
+                  this.students = student;
+                }
+              });
               this.loadingStudents = false;
             }
           });
@@ -136,45 +156,45 @@ export default {
           });
       }
     },
-    async getAllGroups() {
-      let token = this.$store.state.auth.token;
-      if (token) {
-        await axios
-          .get(`${this.$store.state.url.url}/api/group/groups/`, {
-            headers: {
-              Authorization: token,
-            },
-          })
-          .then((response) => {
-            let groups = {
-              changes: 0,
-              groups: response.data,
-            };
-            this.groups = groups;
-          });
-      }
-    },
+    // async getAllGroups() {
+    //   let token = this.$store.state.auth.token;
+    //   if (token) {
+    //     await axios
+    //       .get(`${this.$store.state.url.url}/api/group/groups/`, {
+    //         headers: {
+    //           Authorization: token,
+    //         },
+    //       })
+    //       .then((response) => {
+    //         let groups = {
+    //           changes: 0,
+    //           groups: response.data,
+    //         };
+    //         this.groups = groups;
+    //       });
+    //   }
+    // },
     organizeStats() {
       let stats = [[], [], [], [], [], []];
       let points = [];
       this.achievements.forEach((stat) => {
         switch (moment(stat.created_at).week()) {
-          case 5:
+          case 6:
             stats[0].push(stat);
             break;
-          case 6:
+          case 7:
             stats[1].push(stat);
             break;
-          case 7:
+          case 8:
             stats[2].push(stat);
             break;
-          case 8:
+          case 9:
             stats[3].push(stat);
             break;
-          case 9:
+          case 10:
             stats[4].push(stat);
             break;
-          case 10:
+          case 11:
             stats[5].push(stat);
             break;
         }
@@ -189,7 +209,7 @@ export default {
         points.push(totalPoints);
       });
       this.datacollection = {
-        labels: ["1/25", "2/1", "2/8", "2/12", "2/22", "3/1"],
+        labels: ["2/1", "2/8", "2/12", "2/22", "3/1", "3/8"],
         datasets: [
           {
             label: "Total Points Per Week",
