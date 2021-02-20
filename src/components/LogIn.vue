@@ -30,7 +30,7 @@
               </v-card>
               <v-card class="px-4" v-else-if="!loading">
                 <v-card-text>
-                  <v-form ref="loginForm" v-model="valid" lazy-validation>
+                  <v-form ref="loginForm" v-model="valid" @submit="validate" lazy-validation>
                     <v-row class="justify-center pt-4 pb-4">
                       <GoogleAuth
                         prompt="Sign in With Google"
@@ -82,6 +82,7 @@
                       <v-col class="d-flex" cols="12" sm="3" xsm="12" align-end>
                         <v-btn
                           x-large
+                          type="submit"
                           block
                           :disabled="!valid"
                           color="success"
@@ -109,7 +110,7 @@
               </v-card>
               <v-card class="px-4" v-else-if="!loading">
                 <v-card-text>
-                  <v-form ref="registerForm" v-model="valid" lazy-validation>
+                  <v-form ref="registerForm" v-model="valid" @submit="validate" lazy-validation>
                     <v-row class="justify-center pt-4 pb-4">
                       <GoogleAuth
                         prompt="Register With Google"
@@ -209,6 +210,7 @@
                         <v-btn
                           x-large
                           block
+                          type="submit"
                           :disabled="!valid"
                           color="success"
                           @click="validate"

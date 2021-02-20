@@ -161,7 +161,6 @@ export default {
       }
     },
     async uploadImage() {
-      console.log(this.avatar);
       let token = this.$store.state.auth.token;
       let data = new FormData();
       data.append("image", this.avatar, this.avatar.fileName);

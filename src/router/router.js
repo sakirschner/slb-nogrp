@@ -5,7 +5,7 @@ import Home from '../views/NoGroups/Home'
 import GroupInfo from '../views/GroupInfo'
 import Stats from '../views/Stats'
 import Base from '../views/Base'
-// import store from '../store/index'
+import Daily from '../views/NoGroups/Daily'
 
 Vue.use(VueRouter)
 
@@ -22,6 +22,14 @@ const router = new VueRouter({
             path: '/profile',
             name: 'profile',
             component: Profile,
+            // meta: {
+            //     requiresAuth: false
+            //   }
+        },
+        {
+            path: '/daily',
+            name: 'daily',
+            component: Daily,
             // meta: {
             //     requiresAuth: false
             //   }

@@ -88,7 +88,6 @@ export default {
             }
           )
           .then((response) => {
-            console.log("in then");
             this.achievements = response.data;
             this.achievements.forEach((stat, index) => {
               this.achievements[index].created_at =
@@ -101,7 +100,6 @@ export default {
       }
     },
     async compareStudentPoints() {
-      console.log("comparing");
       this.students.students.forEach((student) => {
         let points = 0;
         let studentAchievements = this.achievements.filter((achievement) => {
@@ -114,7 +112,6 @@ export default {
           this.updateStudent(student.id, points);
         }
       });
-      console.log("done comparing");
       this.loading = false;
     },
     async updateStudent(id, points) {

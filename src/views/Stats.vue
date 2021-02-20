@@ -102,7 +102,6 @@ export default {
             },
           })
           .then((response) => {
-            console.log(response.data);
             this.account = response.data;
             this.getStudents();
           });
@@ -127,8 +126,6 @@ export default {
             } else {
               response.data.forEach((student) => {
                 if ((student.email = this.account.email)) {
-                  console.log("student");
-                  console.log(student);
                   this.students = student;
                 }
               });

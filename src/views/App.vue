@@ -65,6 +65,15 @@
             </v-list-item>
           </router-link>
 
+          <router-link :to="{ name: 'daily' }" style="text-decoration: none">
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-calendar</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Daily Ranks</v-list-item-title>
+            </v-list-item>
+          </router-link>
+
           <router-link :to="{ name: 'stats' }" style="text-decoration: none">
             <v-list-item>
               <v-list-item-icon>

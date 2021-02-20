@@ -20,7 +20,6 @@ const actions = {
         )
     },
     getAccount({commit, rootState}) {
-        console.log("getting account")
         let token = rootState.auth.token
         if (token) {
             axios.get(`${this.$store.state.url.url}/api/user/me/`, {
